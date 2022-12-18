@@ -94,13 +94,13 @@
 	</dependencies>
 	<distributionManagement>
 	    <repository>
-	      <id>nexus</id>
+	      <id>nexus-releases</id>
 	      <name>Landmark Technologies Releases Nexus Repository</name>
-	      <url>http://172.31.6.64:8081/repository/tesla-web-releases/</url>
+	      <url>http://172.31.6.64:8081/repository/tesla-web-releases</url>
 	    </repository>
 	    
 	    <snapshotRepository>
-	      <id>nexus</id>
+	      <id>nexus-snapshots</id>
 	      <name>Landmark Technologies Snapshot Nexus Repository</name>
 	      <url>http://172.31.6.64:8081/repository/tesla-web-snapshots/</url>
 	    </snapshotRepository>
