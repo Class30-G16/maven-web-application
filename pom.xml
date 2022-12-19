@@ -96,7 +96,7 @@
 	    <repository>
 	      <id>nexus-releases</id>
 	      <name>Landmark Technologies Releases Nexus Repository</name>
-	      <url>http://172.31.6.64:8081/repository/maven-releases/</url>
+	      <url>http://172.31.6.64:8081/repository/tesla-web-releases2/</url>
 	    </repository>
 	    
 	    <snapshotRepository>
