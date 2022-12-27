@@ -1,0 +1,60 @@
+pipeline{
+  agent any 
+  tools {
+    maven "maven3.8.6"
+  }  
+  stages {
+    stage('1GetCode'){
+      steps{
+        sh "echo 'cloning the latest application version' "
+        git credentialsId: 'tomcatcredential', url: 'https://github.com/Class30-G16/maven-web-application'
+      }
+    }
+    stage('3Test+Build'){
+      steps{
+        sh "echo 'running JUnit-test-cases' "
+        sh "echo 'testing must passed to create artifacts ' "
+        sh "mvn clean package"
+      }
+    }
+    stage('4CodeQuality'){
+      steps{
+        sh "echo 'Perfoming CodeQualityAnalysis' "
+        sh "mvn sonar:sonar"
+      }
+    } 
+    stage('5uploadNexus'){
+      steps{
+        sh "mvn deploy"
+      }
+    }  
+    stage('8deploy2prod'){
+      steps{
+        deploy adapters: [tomcat9(credentialsId: 'tomcatcredential', path: '', url: 'http://18.118.143.81:8080/')], contextPath: null, war: 'target/*war'
+  }
+  }
+}
+post{
+    always{
+      emailext body: '''Hey guys
+Please check build status.
+
+Thanks
+Elyon''', recipientProviders: [buildUser(), contributor(), developers()], subject: 'success', to: 'ask42bi@gmail.com'
+    }
+    success{
+      emailext body: '''Hey Guys
+Good job build and deployment is successful
+
+Thanks
+Elyon''', recipientProviders: [buildUser(), contributor(), developers()], subject: 'success', to: 'ask42bi@gmail.com'
+    } 
+    failure{
+     emailext body: '''Hey guys
+Build failed. Please resolve issues.
+
+Thanks
+Elyon''', recipientProviders: [buildUser(), contributor(), developers()], subject: 'success', to: 'ask42bi@gmail.com'
+    }
+}
+}
